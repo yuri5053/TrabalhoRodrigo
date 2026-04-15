@@ -15,12 +15,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+    
+      - name: Clear npm cache
+        run: npm cache clean --force
 
       - name: Instalar dependências
-        run: npm install
+        run: npm ci
+
+      - name: Fix permissions
+        run: chmod +x node_modules/.bin/*
 
       - name: Rodar lint
         run: npm run lint
 
       - name: Rodar testes com cobertura
-        run: npm test -- --coverage
+        run: npx jest --coverage
